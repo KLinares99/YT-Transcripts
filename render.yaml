@@ -1,0 +1,20 @@
+# One-click deploy: https://render.com/deploy?repo=https://github.com/KLinares99/YT-Transcripts
+services:
+  - type: web
+    name: yt-transcripts
+    runtime: docker
+    plan: starter          # needed for the disk below, so transcripts survive restarts
+    healthCheckPath: /healthz
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: YTT_PASSWORD
+        sync: false        # Render asks you to type a password during setup
+      - key: YTT_WORKERS
+        value: "1"         # gentle on YouTube; cloud IPs get rate-limited faster
+      - key: YTT_REQUEST_DELAY
+        value: "2"
+      - key: YTT_PROXY
+        sync: false        # optional: leave blank unless YouTube blocks the server

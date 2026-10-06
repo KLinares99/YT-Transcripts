@@ -27,7 +27,18 @@ flowchart LR
 | 🟡 **No captions** | YouTube has no captions for it (turn on Whisper to transcribe these) |
 | 🔴 **Failed** | Something went wrong; use **Retry failed** |
 
-## Run it
+## Use it on your phone (host it online)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/KLinares99/YT-Transcripts)
+
+1. Tap the button and sign in to Render with GitHub.
+2. When asked for `YTT_PASSWORD`, type a password. Leave `YTT_PROXY` blank.
+3. Tap **Apply**. After about 5 minutes Render shows your link (`https://yt-transcripts-xxxx.onrender.com`).
+4. Open the link on your phone and enter your password (the username can be anything). Tip: use **Add to Home Screen** to get an app icon.
+
+Costs about $7/month (Render Starter plus a 1 GB disk, so your transcripts survive restarts).
+
+## Run it on a computer
 
 **Option A: script (Python 3.10+)**
 
@@ -73,6 +84,7 @@ YTT_DEMO=1 ./run.sh
 | `YTT_WHISPER_MODEL` | `base` | Whisper model size (`tiny`, `base`, `small`, `medium`, `large-v3`) |
 | `YTT_PROXY` | – | HTTP(S) proxy for all YouTube requests |
 | `YTT_DATA_DIR` | `./data` | Where the database lives |
+| `YTT_PASSWORD` | – | Require a password to open the app (recommended when hosted) |
 | `YTT_DEMO` | `0` | Fake data mode |
 
 ## Good to know

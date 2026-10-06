@@ -25,3 +25,5 @@ WHISPER_MODEL = os.getenv("YTT_WHISPER_MODEL", "base")
 PROXY = os.getenv("YTT_PROXY") or None
 # Demo mode: generate fake channels instead of contacting YouTube.
 DEMO = _bool("YTT_DEMO", False)
+# Password for the whole app (HTTP Basic auth, any username). Set this when hosting publicly.
+PASSWORD = os.getenv("YTT_PASSWORD") or None

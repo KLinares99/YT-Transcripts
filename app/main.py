@@ -1,20 +1,22 @@
 """FastAPI app: REST API + the single-page UI."""
 
+import base64
 import csv
 import io
 import json
 import logging
 import re
+import secrets
 import zipfile
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, PlainTextResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import db, youtube
+from . import config, db, youtube
 from .worker import pool, start_scan
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -30,6 +32,29 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(title="YT Transcripts", lifespan=lifespan)
+
+
+@app.middleware("http")
+async def password_gate(request: Request, call_next):
+    """When YTT_PASSWORD is set, the browser asks for it (any username works)."""
+    if config.PASSWORD and request.url.path != "/healthz":
+        ok = False
+        auth = request.headers.get("authorization", "")
+        if auth.lower().startswith("basic "):
+            try:
+                _, _, pw = base64.b64decode(auth[6:]).decode().partition(":")
+                ok = secrets.compare_digest(pw.encode(), config.PASSWORD.encode())
+            except ValueError:
+                pass
+        if not ok:
+            return Response("Password required", status_code=401,
+                            headers={"WWW-Authenticate": 'Basic realm="Channel Transcriber"'})
+    return await call_next(request)
+
+
+@app.get("/healthz", include_in_schema=False)
+def healthz():
+    return {"ok": True}
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
 
 

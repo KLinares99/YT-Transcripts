@@ -222,3 +222,15 @@ def test_video_shared_between_catalogues(client):
     assert client.get(f"/api/channels/{b['id']}").json()["stats"]["total"] > 0
     client.delete(f"/api/channels/{b['id']}")
     assert client.get("/api/search", params={"q": "basics"}).json() == []
+
+
+def test_password_gate(client, monkeypatch):
+    import base64
+    from app import config
+    monkeypatch.setattr(config, "PASSWORD", "s3cret")
+    assert client.get("/api/channels").status_code == 401
+    assert client.get("/healthz").status_code == 200
+    bad = base64.b64encode(b"me:nope").decode()
+    good = base64.b64encode(b"anyone:s3cret").decode()
+    assert client.get("/", headers={"Authorization": f"Basic {bad}"}).status_code == 401
+    assert client.get("/api/channels", headers={"Authorization": f"Basic {good}"}).status_code == 200
