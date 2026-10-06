@@ -38,6 +38,17 @@ flowchart LR
 
 Costs about $7/month (Render Starter plus a 1 GB disk, so your transcripts survive restarts).
 
+## Run it on a Mac (free)
+
+1. Install Python from https://www.python.org/downloads/ (if you don't have 3.10 or newer).
+2. On GitHub, tap **Code → Download ZIP**, then double-click the ZIP in Downloads to unzip it.
+3. Open **Terminal** and run:
+   ```bash
+   cd ~/Downloads/YT-Transcripts-master
+   bash run.sh
+   ```
+4. Your browser opens the app. Keep the Terminal window open while you use it. Next time, only step 3 is needed.
+
 ## Run it on a computer
 
 **Option A: script (Python 3.10+)**
