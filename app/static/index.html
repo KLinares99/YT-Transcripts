@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Channel Transcriber</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23e5484d'/><path d='M12 9l11 7-11 7z' fill='white'/></svg>">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" data-nav="home">
+      <span class="logo"><svg viewBox="0 0 24 24"><path d="M9 6.5l9 5.5-9 5.5z"/></svg></span>
+      <span>Channel Transcriber</span>
+    </a>
+    <form id="add-form" class="add-form">
+      <input id="add-url" type="text" placeholder="Paste a YouTube channel link — e.g. youtube.com/@veritasium" autocomplete="off" required>
+      <label class="check"><input type="checkbox" id="add-shorts"> Shorts</label>
+      <label class="check"><input type="checkbox" id="add-streams"> Live</label>
+      <button class="btn primary" type="submit">Transcribe channel</button>
+    </form>
+    <form id="search-form" class="search-form">
+      <svg viewBox="0 0 24 24" class="icon"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="search-q" type="search" placeholder="Search every transcript…">
+    </form>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">Channels</div>
+      <div id="channel-list"></div>
+    </aside>
+    <main id="main"></main>
+  </div>
+
+  <div id="drawer" class="drawer" hidden>
+    <div class="drawer-backdrop" data-close></div>
+    <section class="drawer-panel" role="dialog" aria-modal="true">
+      <button class="icon-btn drawer-close" data-close aria-label="Close">✕</button>
+      <div id="drawer-body"></div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

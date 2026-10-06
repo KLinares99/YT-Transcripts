@@ -1,0 +1,6 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+yt-dlp>=2025.1.1
+youtube-transcript-api>=1.2.0
+# Optional: transcribe videos that have no captions (also needs ffmpeg)
+# faster-whisper>=1.0
